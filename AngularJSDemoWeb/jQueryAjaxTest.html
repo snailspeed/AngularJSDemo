@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>jQuery Ajax Test</title>
+    <link href="/Content/bootstrap.css" rel="stylesheet" />
+    <script type="text/javascript" src="/Scripts/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="/Scripts/bootstrap.js"></script>
+</head>
+<body>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-1">
+            <p class="text-primary">在输入框中尝试输入：</p>
+            <p>Value 1：<input class="input-sm" name="valueInput1" id="valueInput1" type="text"></p>
+            <p>Value 2：<input class="input-sm" name="valueInput2" id="valueInput2" type="text"></p>
+            <input class="btn btn-success" type="button" id="button" value="Call Ajax" />
+        </div>
+    </div>
+
+    <script type="text/javascript" src="/Scripts/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="/Scripts/bootstrap.js"></script>
+    <script type="text/javascript">
+        (function ($) {
+            $.postJson = function (url, data) {
+                return $.ajax({
+                    url: url,
+
+                    data: JSON.stringify(data),
+                    type: 'POST',
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8'
+                });
+            };
+        })(jQuery);
+
+        $(document).ready(function () {
+            //$('#button').click(function () {
+            //    $.postJson('/controller/action', { Prop1: 'hi', Prop2: 'bye' })
+            //    .done(function (r) { alert('It worked.'); })
+            //    .fail(function (x) { alert('Fail! ' + x.status); });
+            //});
+
+            $('#button').click(function () {
+                $.post('/Home/AjaxDemo', { Value1: $('#valueInput1').val(), Value2: $('#valueInput2').val() },
+                 $.proxy(function (data) {
+                     var testInstance = data;
+                     if (!$.isEmptyObject(testInstance)) {
+                         alert("Got a instance." + testInstance.data);
+                     }
+                     else {
+                         alert("Create a default stopwatch instance.");
+                     }
+                 }, this)).fail($.proxy(
+             function (err) {
+                 if (err.status() != 0) {
+                     alert("Stopwatch error!");
+                 }
+             }, this));
+            });
+        });
+    </script>
+</body>
+</html>

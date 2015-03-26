@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>jQuery Ajax Test</title>
+    <link href="/Content/bootstrap.css" rel="stylesheet" />
+    <script type="text/javascript" src="/Scripts/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="/Scripts/bootstrap.js"></script>
+    <script type="text/javascript" src="/Scripts/angular1.2.5.min.js"></script>
+</head>
+<body>
+    <div ng-app="" ng-controller="personController">
+        名： <input type="text" ng-model="person.firstName"><br>
+        姓： <input type="text" ng-model="person.lastName"><br>
+        <br>
+        姓名： {{person.firstName + " " + person.lastName}}
+    </div>
+    <script type="text/javascript">
+        function personController($scope) {
+            $scope.person = {
+                firstName: "John",
+                lastName: "Doe"
+            };
+        }
+    </script>
+</body>
+</html>
